@@ -1,0 +1,60 @@
+---------------------------------
+Required Modules:
+---------------------------------
+pyttsx [https://pypi.python.org/pypi/pyttsx] (if pip is installed, use ‘python -m pip install pyttsx’)
+
+SpeechRecognition 1.4.0 [https://pypi.python.org/pypi/SpeechRecognition/] (place directory ‘speech_recognition’ [nested 
+under ‘speech_recognition 1.4.0’] in Interactive Story directory)
+
+pywin32 [http://sourceforge.net/projects/pywin32/files/pywin32/] at this time most recent build is 219; elect the 
+32bit version of the software (if error ‘win32api module not found’ try placing all win32*.pyd files in same directory 
+as python.exe)
+
+pyaudio [https://people.csail.mit.edu/hubert/pyaudio/]
+
+
+---------------------------------
+Creating a Story:
+---------------------------------
+Create a story in the form of a flow chart, with nodes to represent different activities
+
+In interactive_story.py:
+     Add your story line to the story dictionary.
+     
+    Note: If you want your player to contain more data than just a name, go ahead in the player.py and interactive_story.py.
+     
+In yourstory_story.py:
+     Declare each node as an instance of a StoryNode object. This requires a name and you can optionally add a description.
+     
+     Add connections between nodes by creating parent-child relationships using the .addChild() method.
+     
+     If some nodes have prerequisites, append the name of the node that must be completed beforehand to the child’s 
+     prereqs list. This could either be an arbitrary string or the name of an existing node. Each StoryNode's name is
+     automatically set to True in the completed dictionary before you enter the node, but if you want to use a string 
+     (to pass data of some sort instead of True/False), you will have to manually append that to the completed dictionary.
+     
+     Once you have created your activities in yourstory_acts.py, instantiate them as an Activity object 
+     along with any other parameters. Then, match the activity to the correct node using the .setActivity() method.
+     
+     Create your story line, which is a list of all of the nodes. The order doesn’t matter except 
+     the first element must be the first node in the story. 
+     
+     Add the line "import yourstory_story" to interactive_story.py
+     
+In yourstory_acts.py:
+     This file holds all of the activities that will be executed during the nodes in the story. Each node has one 
+     activity method associated with it. Each of these must take the player as a parameter at a minimum, but can take others.
+     
+     If you pass multiple parameters to your activity constructor in interactive_story.py, they will become an n-tuple 
+     and therefore only one parameter (in addition to player) is needed in the activity definition. When referring to 
+     these in the activity, each argument passed in is an element in the n-tuple.
+     
+     Each activity must return None or a string with the name of the next node to travel to. The latter would be used if the 
+     user asks to quit, then you could return "quit" to immediately quit the program, or the name of your ending node, if
+     applicable (in this case, your ending node will always return "quit").
+     
+     You should prompt the player to choose the next node inside the activity and all valid nodes are children of the 
+     current node. But story.py takes the input, validates it, and checks prerequisites (unless you return the next node
+     in your activity, then the story moves directly there).
+     
+     Add the line "from yourstory_acts import *" to interactive_story.py
