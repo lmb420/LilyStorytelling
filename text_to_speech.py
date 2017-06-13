@@ -1,16 +1,23 @@
 import pyttsx
 import win32con, win32api
 
+talk = False
 
 '''This file handles the text to speech aspect of the interactive story using the pyttsx module to 
 produce the speech. Additionally, we use the win32api module for python, which encapsulates the Windows win32api, allowing
 us to send a click to our avatar. Each click changes the current avatar animation being run, simulating a talking or idle state. '''
 
 def onStart(name):
-        click(100,100)
+    global talk
+    print "Starting Speaking"
+    talk = True
+    #click(100,100)
 
 def onEnd(name, completed):
-        click(100,100)
+    global talk
+    print "Done Speaking"
+    talk = False
+    #click(100,100)
 
 engine = pyttsx.init()
 engine.connect("started-utterance", onStart)
@@ -34,15 +41,15 @@ import math
 #lib = ctypes.CDLL('FakeInputWin')
 
 def speak(string):
-        engine.say(string)
-        engine.runAndWait()
-        print string
+    engine.say(string)
+    engine.runAndWait()
+    print string
 
 
 def click(x,y):
-        win32api.SetCursorPos((x,y))
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
+    win32api.SetCursorPos((x,y))
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
 
 
        

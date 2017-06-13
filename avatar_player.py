@@ -1,10 +1,20 @@
 import pyglet 
+import avatar_class
 from win32api import GetSystemMetrics
 
 talk = False
 
 def run_avatar():
-    animation = pyglet.resource.animation("AvatarGifs/lily_idle.gif")
+    avatar = avatar_class.LilyAnimation()
+
+    def update(dt):
+        avatar.dispatchEvent('check_talk')
+
+    pyglet.clock.schedule_interval(update, .1)
+
+    pyglet.app.run()
+
+'''    animation = pyglet.resource.animation("AvatarGifs/lily_idle.gif")
     sprite = pyglet.sprite.Sprite(animation)
     sprite.set_position((GetSystemMetrics(0) - sprite.width)/2, (GetSystemMetrics(1) - sprite.height)/2)
     #create a window and set it to fullscreen
@@ -31,7 +41,7 @@ def run_avatar():
         sprite.image = animation2
         on_draw()
     pyglet.app.run()
-        
+    '''     
         
 
 

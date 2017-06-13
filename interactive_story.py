@@ -16,6 +16,8 @@ import threading
 import avatar_player
 import time
 
+from avatar_class import LilyAnimation
+
 #all story titles must be one word
 
 story_dict = {}
@@ -70,14 +72,15 @@ def get_target(s, targets, targets_syn):        #this method looks for a one wor
    
 def runStory():
         #play avatar
-	t = threading.Thread(target = avatar_player.run_avatar)
-	t.daemon = True
-	t.start()
-	time.sleep(2)
-	#create story from nodes and player 
-	story_line = getStory()
-	if story_line == None:
-            return
+    t = threading.Thread(target = avatar_player.run_avatar)
+    t.daemon = True
+    t.start()
+    time.sleep(2)
+
+    #create story from nodes and player 
+    story_line = getStory()
+    if story_line == None:
+        return
 	player = Player(story_line)
 	story = Story(player, story_line) 
 	#run through the story
